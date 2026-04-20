@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Top Tier Beauty TT — Premium Prom Suits</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #FDFAF6;
+      --warm-white: #F1EFE8;
+      --gold: #BA7517;
+      --gold-light: #FAC775;
+      --charcoal: #2C2C2A;
+      --mid: #5F5E5A;
+      --muted: #888780;
+      --border: #D3D1C7;
+      --sand: #EAD8C0;
+      --font-serif: 'Cormorant Garamond', serif;
+      --font-sans: 'Jost', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-sans); background: var(--cream); color: var(--charcoal); overflow-x: hidden; }
+
+    /* ── POPUP OVERLAY ── */
+    .popup-overlay {
+      position: fixed; inset: 0; background: rgba(44,44,42,0.6);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 1000; opacity: 0; pointer-events: none;
+      transition: opacity 0.5s ease;
+    }
+    .popup-overlay.visible { opacity: 1; pointer-events: all; }
+
+    .popup {
+      background: var(--cream); max-width: 520px; width: 90%;
+      padding: 3rem 2.5rem; position: relative; text-align: center;
+      border: 0.5px solid var(--border);
+      transform: translateY(30px); transition: transform 0.5s ease;
+    }
+    .popup-overlay.visible .popup { transform: translateY(0); }
+
+    .popup-close {
+      position: absolute; top: 1rem; right: 1.2rem;
+      font-size: 20px; cursor: pointer; color: var(--muted);
+      background: none; border: none; font-family: var(--font-sans);
+      line-height: 1;
+    }
+    .popup-close:hover { color: var(--charcoal); }
+    .popup-eyebrow { font-size: 11px; letter-spacing: 0.2em; color: var(--gold); text-transform: uppercase; margin-bottom: 1rem; }
+    .popup-title { font-family: var(--font-serif); font-size: 36px; font-weight: 400; line-height: 1.15; margin-bottom: 1rem; color: var(--charcoal); }
+    .popup-title em { font-style: italic; color: var(--gold); }
+    .popup-desc { font-size: 14px; color: var(--mid); line-height: 1.7; margin-bottom: 1.8rem; }
+    .popup-form { display: flex; flex-direction: column; gap: 12px; }
+    .popup-input {
+      width: 100%; padding: 13px 16px; border: 0.5px solid var(--border);
+      background: #fff; font-family: var(--font-sans); font-size: 14px;
+      color: var(--charcoal); outline: none;
+    }
+    .popup-input:focus { border-color: var(--gold); }
+    .popup-input::placeholder { color: var(--muted); }
+    .popup-submit {
+      background: var(--charcoal); color: #fff; border: none;
+      padding: 14px; font-family: var(--font-sans); font-size: 13px;
+      letter-spacing: 0.12em; cursor: pointer; transition: background 0.2s;
+    }
+    .popup-submit:hover { background: var(--gold); }
+    .popup-fine { font-size: 11px; color: var(--muted); margin-top: 0.8rem; }
+    .popup-ribbon {
+      position: absolute; top: 0; left: 0; background: var(--gold);
+      color: #fff; font-size: 10px; letter-spacing: 0.15em;
+      padding: 5px 16px; text-transform: uppercase;
+    }
+
+    /* ── NAV ── */
+    nav {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.2rem 3rem; background: #fff;
+      border-bottom: 0.5px solid var(--border);
+      position: sticky; top: 0; z-index: 100;
+    }
+    .logo { font-family: var(--font-serif); font-size: 22px; font-weight: 600; letter-spacing: 0.04em; }
+    .logo span { color: var(--gold); }
+    .nav-links { display: flex; gap: 2.5rem; font-size: 13px; letter-spacing: 0.08em; color: var(--mid); }
+    .nav-links a { text-decoration: none; color: inherit; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-cta {
+      background: var(--charcoal); color: #fff; border: none;
+      padding: 9px 22px; font-size: 12px; font-family: var(--font-sans);
+      letter-spacing: 0.1em; cursor: pointer; transition: background 0.2s;
+    }
+    .nav-cta:hover { background: var(--gold); }
+
+    /* ── HERO ── */
+    .hero { display: grid; grid-template-columns: 1fr 1fr; min-height: 520px; }
+    .hero-left {
+      background: var(--warm-white); display: flex; flex-direction: column;
+      justify-content: center; padding: 5rem 4rem;
+    }
+    .eyebrow { font-size: 11px; letter-spacing: 0.22em; color: var(--gold); text-transform: uppercase; margin-bottom: 1.2rem; }
+    .hero-title { font-family: var(--font-serif); font-size: 58px; font-weight: 300; line-height: 1.08; margin-bottom: 1.5rem; }
+    .hero-title em { font-style: italic; color: var(--gold); }
+    .hero-sub { font-size: 14px; color: var(--mid); line-height: 1.75; max-width: 360px; margin-bottom: 2.2rem; }
+    .hero-btns { display: flex; gap: 1rem; }
+    .btn-primary {
+      background: var(--charcoal); color: #fff; border: none;
+      padding: 13px 30px; font-size: 13px; font-family: var(--font-sans);
+      letter-spacing: 0.1em; cursor: pointer; transition: background 0.2s;
+    }
+    .btn-primary:hover { background: var(--gold); }
+    .btn-outline {
+      background: transparent; color: var(--charcoal);
+      border: 0.5px solid var(--charcoal); padding: 13px 30px;
+      font-size: 13px; font-family: var(--font-sans); letter-spacing: 0.1em;
+      cursor: pointer; transition: all 0.2s;
+    }
+    .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+    .hero-right {
+      background: var(--sand); display: flex; align-items: center;
+      justify-content: center; position: relative; overflow: hidden;
+    }
+    .hero-tag {
+      position: absolute; bottom: 2rem; right: 2rem; background: #fff;
+      padding: 12px 18px; border: 0.5px solid var(--border);
+    }
+    .hero-tag strong { display: block; font-size: 15px; font-family: var(--font-serif); color: var(--charcoal); }
+    .hero-tag span { font-size: 12px; color: var(--muted); }
+
+    /* ── TRUST BAR ── */
+    .trust-bar {
+      background: var(--charcoal); display: flex;
+      justify-content: center; gap: 3rem; padding: 1.2rem 3rem;
+      flex-wrap: wrap;
+    }
+    .trust-item { font-size: 11px; color: #B4B2A9; letter-spacing: 0.12em; display: flex; align-items: center; gap: 8px; text-transform: uppercase; }
+    .trust-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--gold); flex-shrink: 0; }
+
+    /* ── PRODUCTS ── */
+    .section { padding: 5rem 3rem; }
+    .section-header { text-align: center; margin-bottom: 3.5rem; }
+    .section-label { font-size: 11px; letter-spacing: 0.2em; color: var(--gold); text-transform: uppercase; margin-bottom: 0.8rem; }
+    .section-title { font-family: var(--font-serif); font-size: 40px; font-weight: 400; color: var(--charcoal); }
+
+    .products-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    .product-card { background: #fff; border: 0.5px solid var(--border); cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; }
+    .product-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(44,44,42,0.08); }
+    .product-img { height: 280px; display: flex; align-items: center; justify-content: center; position: relative; }
+    .product-badge {
+      position: absolute; top: 12px; left: 12px; background: var(--gold);
+      color: #fff; font-size: 10px; padding: 4px 12px; letter-spacing: 0.12em; text-transform: uppercase;
+    }
+    .product-info { padding: 1.2rem 1.4rem 1.4rem; }
+    .product-name { font-family: var(--font-serif); font-size: 20px; font-weight: 500; margin-bottom: 4px; }
+    .product-details { font-size: 12px; color: var(--muted); margin-bottom: 12px; }
+    .product-footer { display: flex; justify-content: space-between; align-items: center; }
+    .price { font-size: 16px; font-weight: 500; }
+    .add-btn {
+      font-size: 11px; letter-spacing: 0.1em; background: none;
+      border: 0.5px solid var(--charcoal); padding: 7px 16px;
+      cursor: pointer; font-family: var(--font-sans); transition: all 0.2s;
+      text-transform: uppercase;
+    }
+    .add-btn:hover { background: var(--charcoal); color: #fff; }
+
+    /* ── BNPL SECTION ── */
+    .bnpl-section {
+      background: var(--warm-white); padding: 4rem 3rem;
+      display: flex; align-items: center; justify-content: space-between; gap: 3rem;
+    }
+    .bnpl-left { max-width: 520px; }
+    .bnpl-title { font-family: var(--font-serif); font-size: 34px; font-weight: 400; margin-bottom: 1rem; line-height: 1.2; }
+    .bnpl-desc { font-size: 14px; color: var(--mid); line-height: 1.75; }
+    .bnpl-steps { display: flex; gap: 1.2rem; flex-shrink: 0; }
+    .bnpl-step { background: #fff; border: 0.5px solid var(--border); padding: 1.5rem 1.8rem; text-align: center; }
+    .step-num { font-family: var(--font-serif); font-size: 36px; color: var(--gold); font-weight: 600; line-height: 1; }
+    .step-label { font-size: 11px; color: var(--muted); margin-top: 6px; line-height: 1.5; letter-spacing: 0.05em; }
+
+    /* ── ABOUT STRIP ── */
+    .about-strip { background: var(--charcoal); color: #fff; padding: 4rem 3rem; text-align: center; }
+    .about-strip .section-label { color: var(--gold-light); }
+    .about-title { font-family: var(--font-serif); font-size: 36px; font-weight: 300; margin: 0.8rem 0 1.2rem; }
+    .about-title em { font-style: italic; color: var(--gold-light); }
+    .about-text { font-size: 14px; color: #B4B2A9; line-height: 1.8; max-width: 600px; margin: 0 auto 2rem; }
+    .btn-light { background: #fff; color: var(--charcoal); border: none; padding: 13px 30px; font-size: 13px; font-family: var(--font-sans); letter-spacing: 0.1em; cursor: pointer; transition: background 0.2s; }
+    .btn-light:hover { background: var(--gold-light); }
+
+    /* ── FOOTER ── */
+    footer { background: #1E1E1C; color: #888780; padding: 2.5rem 3rem; }
+    .footer-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 2rem; margin-bottom: 2rem; flex-wrap: wrap; }
+    .footer-logo { font-family: var(--font-serif); font-size: 22px; color: #fff; margin-bottom: 0.5rem; }
+    .footer-logo span { color: var(--gold); }
+    .footer-tagline { font-size: 12px; color: #5F5E5A; }
+    .footer-col h4 { font-size: 11px; letter-spacing: 0.15em; color: #fff; text-transform: uppercase; margin-bottom: 1rem; font-weight: 500; }
+    .footer-col a { display: block; font-size: 13px; color: #888780; text-decoration: none; margin-bottom: 0.5rem; transition: color 0.2s; }
+    .footer-col a:hover { color: var(--gold); }
+    .footer-bottom { border-top: 0.5px solid #2C2C2A; padding-top: 1.5rem; display: flex; justify-content: space-between; font-size: 11px; flex-wrap: wrap; gap: 0.5rem; }
+
+    /* ── MOBILE ── */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      .hero { grid-template-columns: 1fr; }
+      .hero-left { padding: 3rem 1.5rem; }
+      .hero-title { font-size: 40px; }
+      .hero-right { min-height: 280px; }
+      .trust-bar { gap: 1rem; padding: 1rem 1.5rem; }
+      .section { padding: 3rem 1.5rem; }
+      .products-grid { grid-template-columns: 1fr; }
+      .bnpl-section { flex-direction: column; padding: 3rem 1.5rem; }
+      .bnpl-steps { width: 100%; justify-content: center; }
+      .footer-top { flex-direction: column; }
+      .popup { padding: 2.5rem 1.5rem; }
+      .popup-title { font-size: 28px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── POP-UP ── -->
+  <div class="popup-overlay" id="popup">
+    <div class="popup">
+      <div class="popup-ribbon">Limited Time</div>
+      <button class="popup-close" onclick="closePopup()">✕</button>
+      <div class="popup-eyebrow">Exclusive Giveaway</div>
+      <div class="popup-title">Win Your Prom Suit <em>Absolutely Free</em></div>
+      <p class="popup-desc">Sign up and you could win your qualifying order on us. One lucky winner each month. No purchase necessary to enter — just your email.</p>
+      <div class="popup-form">
+        <input class="popup-input" type="text" placeholder="Your full name" id="popup-name" />
+        <input class="popup-input" type="email" placeholder="Your email address" id="popup-email" />
+        <button class="popup-submit" onclick="handlePopupSubmit()">ENTER TO WIN & GET 10% OFF</button>
+      </div>
+      <p class="popup-fine">No spam, ever. Unsubscribe anytime. Winners announced monthly.</p>
+    </div>
+  </div>
+
+  <!-- ── NAV ── -->
+  <nav>
+    <div class="logo">Top Tier Beauty <span>TT</span></div>
+    <div class="nav-links">
+      <a href="#collection">Collection</a>
+      <a href="#payment">Payment Plans</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <button class="nav-cta">SHOP NOW</button>
+  </nav>
+
+  <!-- ── HERO ── -->
+  <section class="hero">
+    <div class="hero-left">
+      <div class="eyebrow">Prom 2026 Collection</div>
+      <h1 class="hero-title">Dress for Your<br><em>Best Night</em></h1>
+      <p class="hero-sub">Premium prom suits crafted for the young man who wants to make an entrance. Delivered across Trinidad & Tobago and the Caribbean.</p>
+      <div class="hero-btns">
+        <button class="btn-primary" onclick="document.getElementById('collection').scrollIntoView({behavior:'smooth'})">SHOP SUITS</button>
+        <button class="btn-outline">VIEW LOOKBOOK</button>
+      </div>
+    </div>
+    <div class="hero-right">
+      <svg width="140" height="210" viewBox="0 0 120 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="30" y="0" width="60" height="70" rx="4" fill="#D3D1C7"/>
+        <polygon points="60,10 45,70 60,50 75,70" fill="#fff" opacity="0.6"/>
+        <rect x="54" y="48" width="12" height="28" fill="#BA7517" opacity="0.9"/>
+        <rect x="10" y="70" width="100" height="110" rx="4" fill="#888780"/>
+        <rect x="10" y="70" width="48" height="110" rx="2" fill="#5F5E5A"/>
+        <rect x="62" y="70" width="48" height="110" rx="2" fill="#5F5E5A"/>
+        <rect x="20" y="88" width="28" height="3" rx="1.5" fill="#D3D1C7" opacity="0.5"/>
+        <rect x="20" y="98" width="20" height="3" rx="1.5" fill="#D3D1C7" opacity="0.4"/>
+        <rect x="72" y="88" width="28" height="3" rx="1.5" fill="#D3D1C7" opacity="0.5"/>
+        <rect x="72" y="98" width="20" height="3" rx="1.5" fill="#D3D1C7" opacity="0.4"/>
+      </svg>
+      <div class="hero-tag">
+        <strong>Pay in 2 parts</strong>
+        <span>50% now · 50% before your event</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── TRUST BAR ── -->
+  <div class="trust-bar">
+    <div class="trust-item"><span class="trust-dot"></span>Caribbean-wide delivery</div>
+    <div class="trust-item"><span class="trust-dot"></span>Multi-currency payments</div>
+    <div class="trust-item"><span class="trust-dot"></span>Pay 50% now, 50% later</div>
+    <div class="trust-item"><span class="trust-dot"></span>Secure checkout</div>
+  </div>
+
+  <!-- ── PRODUCTS ── -->
+  <section class="section" id="collection">
+    <div class="section-header">
+      <div class="section-label">Featured Styles</div>
+      <div class="section-title">The 2026 Prom Edit</div>
+    </div>
+    <div class="products-grid">
+
+      <div class="product-card">
+        <div class="product-img" style="background:#EAD8C0;">
+          <svg width="80" height="120" viewBox="0 0 120 180" fill="none"><rect x="30" y="0" width="60" height="70" rx="4" fill="#B4B2A9"/><polygon points="60,10 45,70 60,50 75,70" fill="#fff" opacity="0.5"/><rect x="10" y="70" width="100" height="110" rx="4" fill="#888780"/><rect x="10" y="70" width="48" height="110" rx="2" fill="#5F5E5A"/><rect x="62" y="70" width="48" height="110" rx="2" fill="#5F5E5A"/></svg>
+          <div class="product-badge">Bestseller</div>
+        </div>
+        <div class="product-info">
+          <div class="product-name">The Classic Black</div>
+          <div class="product-details">Slim fit · Sizes 34–48 · Black</div>
+          <div class="product-footer">
+            <span class="price">TTD $2,400</span>
+            <button class="add-btn">Add to Cart</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img" style="background:#E1F5EE;">
+          <svg width="80" height="120" viewBox="0 0 120 180" fill="none"><rect x="30" y="0" width="60" height="70" rx="4" fill="#9FE1CB"/><polygon points="60,10 45,70 60,50 75,70" fill="#fff" opacity="0.5"/><rect x="10" y="70" width="100" height="110" rx="4" fill="#1D9E75"/><rect x="10" y="70" width="48" height="110" rx="2" fill="#0F6E56"/><rect x="62" y="70" width="48" height="110" rx="2" fill="#0F6E56"/></svg>
+          <div class="product-badge">New</div>
+        </div>
+        <div class="product-info">
+          <div class="product-name">The Emerald Statement</div>
+          <div class="product-details">Modern fit · Sizes 34–46 · Emerald</div>
+          <div class="product-footer">
+            <span class="price">TTD $2,800</span>
+            <button class="add-btn">Add to Cart</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img" style="background:#EEEDFE;">
+          <svg width="80" height="120" viewBox="0 0 120 180" fill="none"><rect x="30" y="0" width="60" height="70" rx="4" fill="#AFA9EC"/><polygon points="60,10 45,70 60,50 75,70" fill="#fff" opacity="0.5"/><rect x="10" y="70" width="100" height="110" rx="4" fill="#7F77DD"/><rect x="10" y="70" width="48" height="110" rx="2" fill="#534AB7"/><rect x="62" y="70" width="48" height="110" rx="2" fill="#534AB7"/></svg>
+        </div>
+        <div class="product-info">
+          <div class="product-name">The Royal Plum</div>
+          <div class="product-details">Tailored fit · Sizes 36–48 · Plum</div>
+          <div class="product-footer">
+            <span class="price">TTD $3,100</span>
+            <button class="add-btn">Add to Cart</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── BNPL ── -->
+  <section class="bnpl-section" id="payment">
+    <div class="bnpl-left">
+      <div class="section-label">Flexible Payments</div>
+      <div class="bnpl-title">Your dream suit, without the stress</div>
+      <p class="bnpl-desc">We know prom is a big deal — and so is the budget. That's why we offer a simple split payment option. Pay 50% today to secure your suit, and the remaining 50% before your event. No interest, no hidden fees, no stress.</p>
+    </div>
+    <div class="bnpl-steps">
+      <div class="bnpl-step">
+        <div class="step-num">50%</div>
+        <div class="step-label">Pay now<br>to reserve</div>
+      </div>
+      <div class="bnpl-step">
+        <div class="step-num">50%</div>
+        <div class="step-label">Pay later<br>before your event</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── ABOUT ── -->
+  <section class="about-strip" id="about">
+    <div class="section-label">Our Story</div>
+    <div class="about-title">Built for <em>T&T's finest</em></div>
+    <p class="about-text">Top Tier Beauty TT was created to give young men across Trinidad & Tobago access to premium prom suits without the premium stress. Every suit is handpicked for quality, fit, and style — because you deserve to walk in looking and feeling like royalty.</p>
+    <button class="btn-light">LEARN MORE ABOUT US</button>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer id="contact">
+    <div class="footer-top">
+      <div>
+        <div class="footer-logo">Top Tier Beauty <span>TT</span></div>
+        <div class="footer-tagline">Premium prom suits · Trinidad & Tobago</div>
+      </div>
+      <div class="footer-col">
+        <h4>Shop</h4>
+        <a href="#">All Suits</a>
+        <a href="#">New Arrivals</a>
+        <a href="#">Lookbook</a>
+        <a href="#">Size Guide</a>
+      </div>
+      <div class="footer-col">
+        <h4>Help</h4>
+        <a href="#">FAQ</a>
+        <a href="#">Payment Plans</a>
+        <a href="#">Shipping Info</a>
+        <a href="#">Returns</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <a href="#">Instagram</a>
+        <a href="#">WhatsApp Us</a>
+        <a href="#">Email Us</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Top Tier Beauty TT. All rights reserved.</span>
+      <span>Made with love in Trinidad & Tobago 🇹🇹</span>
+    </div>
+  </footer>
+
+  <script>
+    // Show popup after 4 seconds
+    setTimeout(function() {
+      document.getElementById('popup').classList.add('visible');
+    }, 4000);
+
+    function closePopup() {
+      document.getElementById('popup').classList.remove('visible');
+    }
+
+    // Close if clicking outside popup box
+    document.getElementById('popup').addEventListener('click', function(e) {
+      if (e.target === this) closePopup();
+    });
+
+    function handlePopupSubmit() {
+      var name = document.getElementById('popup-name').value.trim();
+      var email = document.getElementById('popup-email').value.trim();
+      if (!name || !email) {
+        alert('Please enter your name and email to enter.');
+        return;
+      }
+      var popup = document.querySelector('.popup');
+      popup.innerHTML = '<div style="padding:1rem;"><div style="font-family:Cormorant Garamond,serif;font-size:14px;letter-spacing:0.2em;color:#BA7517;text-transform:uppercase;margin-bottom:1rem;">You\'re entered!</div><div style="font-family:Cormorant Garamond,serif;font-size:32px;font-weight:400;margin-bottom:1rem;">Good luck, ' + name.split(' ')[0] + '! 🎉</div><p style="font-size:14px;color:#5F5E5A;line-height:1.7;margin-bottom:1.5rem;">You\'ve been entered into this month\'s giveaway. Check your email for your 10% discount code.</p><button onclick="closePopup()" style="background:#2C2C2A;color:#fff;border:none;padding:13px 30px;font-size:13px;font-family:Jost,sans-serif;letter-spacing:0.1em;cursor:pointer;">SHOP NOW</button></div>';
+    }
+  </script>
+
+</body>
+</html>
